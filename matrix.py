@@ -1,12 +1,4 @@
 import random
-def printMatrix(object):
-    for i in range(len(object.matrix)):
-        for j in range(len(object.matrix[i])):
-            print(object.matrix[i][j], end=' ')
-        print()
-    print()
-
-
 
 class Matrix: #m - строки n - столбцы
     def __init__(self, M, N):
@@ -20,12 +12,18 @@ class Matrix: #m - строки n - столбцы
                 self.matrix[i][j] = random.randint(0, 1000)
 
     def __add__(self, other):
-            if (len(self.matrix) == len(other.matrix) and len(self.matrix[0]) == len(other.matrix[0])):
-                for i in range(len(self.matrix)):
-                    for j in range(len(self.matrix[i])):
-                        self.matrix[i][j] += other.matrix[i][j]
-            printMatrix(object1)
-            else:
-                print("Матрицы не равны")
+        matrixSum = Matrix(len(self.matrix), len(self.matrix[0]))
+        for i in range(len(self.matrix)):
+            for j in range(len(self.matrix[i])):
+                matrixSum.matrix[i][j] = self.matrix[i][j] + other.matrix[i][j]
+        return matrixSum.matrix
 
-    def matrixSum():
+    def __eq__(self, other):
+       return (len(self.matrix) == len(other.matrix) and len(self.matrix[0]) == len(other.matrix[0]))
+
+    def printMatrix(self):
+        for i in range(len(self.matrix)):
+            for j in range(len(self.matrix[i])):
+                print(self.matrix[i][j], end=' ')
+            print()
+        print()
