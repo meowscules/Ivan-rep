@@ -49,15 +49,16 @@ class Matrix: #m - строки n - столбцы
             tmp = []
         return matrixMul.matrix
 
+    # def __mul__(self, num):
+    #     matrixMul = Matrix(len(self.matrix), len(self.matrix[0]))
+    #     for i in range(len(self.matrix)):
+    #         for j in range(len(self.matrix[0])):
+    #             matrixMul.matrix[i][j] = num * self.matrix[i][j]
+    #     return matrixMul.matrix
+
     def printMatrix(self):
         for i in range(len(self.matrix)):
             for j in range(len(self.matrix[i])):
                 print(self.matrix[i][j], end=' ')
             print()
         print()
-
-M1 = Matrix(3, 2)
-M1.printMatrix()
-M2 = Matrix(3, 2)
-M2.printMatrix()
-print(M1-M2)
