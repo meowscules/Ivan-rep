@@ -1,12 +1,25 @@
 import random
 
+def setMatrixSize():
+    row = int(input("Введите количество строк матрицы: "))
+    col = int(input("Введите количество столбцов матрицы: "))
+    return row, col
+
+def writeAmatrixfromclass(object):
+    with open("matrix.txt", "w") as f:
+        for i in range(len(object.matrix)):
+            #f.writelines((input(f"Введите строку {i+1}:"))+'\n')
+            f.writelines(str(object.matrix))
+def writeAmatrixfromkeyboard(object):
+    pass
+
 class Matrix: #m - строки n - столбцы
-    def __init__(self, M, N):
+    def __init__(self,size):
         self.matrix = []
-        self.m = M
-        self.n = N
-        for i in range(self.m):
-            self.matrix.append([0] * self.n)
+        self.m = size[0]
+        self.n = size[1]
+        for i in range(size[0]):
+             self.matrix.append([0] * size[1])
         for i in range(self.m):
             for j in range(self.n):
                 self.matrix[i][j] = random.randint(0, 10)
@@ -36,25 +49,32 @@ class Matrix: #m - строки n - столбцы
        return (len(self.matrix) == len(other.matrix) and len(self.matrix[0]) == len(other.matrix[0]))
 
     def __mul__(self, other):
-        tmp = []
-        matrixMul = Matrix(len(self.matrix), len(other.matrix[0]))
-        matrixMul.matrix = []
-        for i in range(len(self.matrix)):
-            for j in range(len(other.matrix[0])):
-                sums = 0
-                for k in range(len(other.matrix)):
-                    sums = sums + (self.matrix[i][k]*other.matrix[k][j])
-                tmp.append(sums)
-            matrixMul.matrix.append(tmp)
+        if isinstance(other,int):
+            matrixMul = Matrix(len(self.matrix), len(self.matrix[0]))
+            for i in range(len(self.matrix)):
+                for j in range(len(self.matrix[0])):
+                    matrixMul.matrix[i][j] = other * self.matrix[i][j]
+            return matrixMul.matrix
+        elif isinstance(other,object):
             tmp = []
-        return matrixMul.matrix
+            matrixMul = Matrix(len(self.matrix), len(other.matrix[0]))
+            matrixMul.matrix = []
+            for i in range(len(self.matrix)):
+                for j in range(len(other.matrix[0])):
+                    sums = 0
+                    for k in range(len(other.matrix)):
+                        sums = sums + (self.matrix[i][k]*other.matrix[k][j])
+                    tmp.append(sums)
+                matrixMul.matrix.append(tmp)
+                tmp = []
+            return matrixMul.matrix
 
-    # def __mul__(self, num):
-    #     matrixMul = Matrix(len(self.matrix), len(self.matrix[0]))
-    #     for i in range(len(self.matrix)):
-    #         for j in range(len(self.matrix[0])):
-    #             matrixMul.matrix[i][j] = num * self.matrix[i][j]
-    #     return matrixMul.matrix
+    def transposeMatrix(self):
+        tmp = [[None]* len(x) for x in self.matrix]
+        for i in range(len(self.matrix)):
+            for j in range(len(self.matrix[0])):
+                tmp[i][j] = self.matrix[j][i]
+        return tmp
 
     def printMatrix(self):
         for i in range(len(self.matrix)):
@@ -62,3 +82,6 @@ class Matrix: #m - строки n - столбцы
                 print(self.matrix[i][j], end=' ')
             print()
         print()
+
+M1 = Matrix(setMatrixSize())
+writeAmatrix(M1)
