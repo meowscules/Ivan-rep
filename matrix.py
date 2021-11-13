@@ -5,83 +5,88 @@ def setMatrixSize():
     col = int(input("Введите количество столбцов матрицы: "))
     return row, col
 
-def writeAmatrixfromclass(object):
+def writeMatrixFromClass(matrix):
     with open("matrix.txt", "w") as f:
-        for i in range(len(object.matrix)):
+        for i in range(len(matrix.body)):
             #f.writelines((input(f"Введите строку {i+1}:"))+'\n')
-            f.writelines(str(object.matrix))
-def writeAmatrixfromkeyboard(object):
+            f.writelines(str(matrix.body))
+
+def writeMatrixFromKeyboard(matrix):
     pass
 
 class Matrix: #m - строки n - столбцы
-    def __init__(self,size):
-        self.matrix = []
+    def __init__(self, size):
+        self.body = []
         self.m = size[0]
         self.n = size[1]
         for i in range(size[0]):
-             self.matrix.append([0] * size[1])
+             self.body.append([0] * size[1])
         for i in range(self.m):
             for j in range(self.n):
-                self.matrix[i][j] = random.randint(0, 10)
+                self.body[i][j] = random.randint(0, 10)
 
     def __add__(self, other):
-        if (len(self.matrix) == len(other.matrix) and len(self.matrix[0]) == len(other.matrix[0])):
-            matrixAdd = Matrix(len(self.matrix), len(self.matrix[0]))
-            for i in range(len(self.matrix)):
-                for j in range(len(self.matrix[i])):
-                    matrixAdd.matrix[i][j] = self.matrix[i][j] + other.matrix[i][j]
-            return matrixAdd.matrix
+        if (len(self.body) == len(other.body) and len(self.body[0]) == len(other.body[0])):
+            matrixAdd = Matrix(len(self.body))
+            for i in range(len(self.body)):
+                for j in range(len(self.body[i])):
+                    matrixAdd.body[i][j] = self.body[i][j] + other.body[i][j]
+            return matrixAdd.body
         else:
             print("Для сложения матрицы должны быть одинакового размера")
 
 
     def __sub__(self, other):
-        if (len(self.matrix) == len(other.matrix) and len(self.matrix[0]) == len(other.matrix[0])):
-            matrixSub = Matrix(len(self.matrix), len(self.matrix[0]))
-            for i in range(len(self.matrix)):
-                for j in range(len(self.matrix[i])):
-                    matrixSub.matrix[i][j] = self.matrix[i][j] - other.matrix[i][j]
-            return matrixSub.matrix
-        else:
+        if self != other:
             print("Для вычитания матрицы должны быть одинакового размера")
+        else:
+            matrixSub = Matrix(len(self.body))
+            for i in range(len(self.body)):
+                for j in range(len(self.body[i])):
+                    matrixSub.body[i][j] = self.body[i][j] - other.matrix[i][j]
+            return matrixSub.body
 
     def __eq__(self, other):
-       return (len(self.matrix) == len(other.matrix) and len(self.matrix[0]) == len(other.matrix[0]))
+       return (len(self.body) == len(other.body) and len(self.body[0]) == len(other.body[0]))
 
     def __mul__(self, other):
-        if isinstance(other,int):
-            matrixMul = Matrix(len(self.matrix), len(self.matrix[0]))
-            for i in range(len(self.matrix)):
-                for j in range(len(self.matrix[0])):
-                    matrixMul.matrix[i][j] = other * self.matrix[i][j]
-            return matrixMul.matrix
-        elif isinstance(other,object):
+        if isinstance(other, int):
+            matrixMul = Matrix(len(self.body))
+            for i in range(len(self.body)):
+                for j in range(len(self.body[0])):
+                    matrixMul.body[i][j] = other * self.body[i][j]
+            return matrixMul.body
+        elif isinstance(other, object):
             tmp = []
-            matrixMul = Matrix(len(self.matrix), len(other.matrix[0]))
+            matrixMul = Matrix(len(self.body))
             matrixMul.matrix = []
-            for i in range(len(self.matrix)):
-                for j in range(len(other.matrix[0])):
+            for i in range(len(self.body)):
+                for j in range(len(other.body[0])):
                     sums = 0
-                    for k in range(len(other.matrix)):
-                        sums = sums + (self.matrix[i][k]*other.matrix[k][j])
+                    for k in range(len(other.body)):
+                        sums = sums + (self.body[i][k]*other.body[k][j])
                     tmp.append(sums)
-                matrixMul.matrix.append(tmp)
+                matrixMul.body.append(tmp)
                 tmp = []
-            return matrixMul.matrix
+            return matrixMul.body
 
     def transposeMatrix(self):
-        tmp = [[None]* len(x) for x in self.matrix]
-        for i in range(len(self.matrix)):
-            for j in range(len(self.matrix[0])):
-                tmp[i][j] = self.matrix[j][i]
+        tmp = [[None] * len(x) for x in self.body]
+        for i in range(len(self.body)):
+            for j in range(len(self.body[0])):
+                tmp[i][j] = self.body[j][i]
         return tmp
 
     def printMatrix(self):
-        for i in range(len(self.matrix)):
-            for j in range(len(self.matrix[i])):
-                print(self.matrix[i][j], end=' ')
+        for i in range(len(self.body)):
+            for j in range(len(self.body[i])):
+                print(self.body[i][j], end=' ')
             print()
         print()
 
 M1 = Matrix(setMatrixSize())
-writeAmatrix(M1)
+print(M1.body)
+M2 = Matrix(setMatrixSize())
+print(M2.body)
+print(M1-M2)
+
