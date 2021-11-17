@@ -1,6 +1,6 @@
 import random
 
-
+#sdfsdfsdfs
 def setMatrixRows():
     rows = int(input("Введите количество строк матрицы: "))
     return rows
