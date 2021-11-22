@@ -1,5 +1,4 @@
 import random
-
 from Entity.MatrixException import *
 
 
@@ -20,7 +19,7 @@ class Matrix:
             self.body.append([0] * cols)
         for i in range(self.rows):
             for j in range(self.cols):
-                self.body[i][j] = random.randint(0, 10)
+                self.body[i][j] = readMatrix
 
     def validationFunction(self, other):
         if self == other and isinstance(self, Matrix) and isinstance(other, Matrix):
