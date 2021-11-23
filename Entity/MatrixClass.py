@@ -1,4 +1,3 @@
-import random
 from Entity.MatrixException import *
 
 
@@ -11,12 +10,12 @@ def setMatrixCols():
 
 
 class Matrix:
-    def __init__(self, rows, cols):
+    def __init__(self, readMatrixRows, readMatrixCols, readMatrix):
         self.body = []
-        self.rows = rows
-        self.cols = cols
-        for i in range(rows):
-            self.body.append([0] * cols)
+        self.rows = readMatrixRows[0]
+        self.cols = readMatrixCols
+        for i in range(readMatrixRows[0]):
+            self.body.append([0] * readMatrixCols)
         for i in range(self.rows):
             for j in range(self.cols):
                 self.body[i][j] = readMatrix
@@ -32,7 +31,7 @@ class Matrix:
 
     def __add__(self, other):
         if self.validationFunction(other):
-            matrixAdd = Matrix(len(self.body), len(self.body[0]))
+            matrixAdd = Matrix(1, len(self.body))
             for i in range(len(self.body)):
                 for j in range(len(self.body[i])):
                     matrixAdd.body[i][j] = self.body[i][j] + other.body[i][j]
@@ -42,7 +41,7 @@ class Matrix:
 
     def __sub__(self, other):
         if self.validationFunction(other):
-            matrixSub = Matrix(len(self.body), len(self.body[0]))
+            matrixSub = Matrix(1, len(self.body))
             for i in range(len(self.body)):
                 for j in range(len(self.body[i])):
                     matrixSub.body[i][j] = self.body[i][j] - other.body[i][j]
@@ -53,14 +52,14 @@ class Matrix:
     def __mul__(self, other):
         try:
             if isinstance(other, int):
-                matrixMul = Matrix(len(self.body), len(self.body[0]))
+                matrixMul = Matrix(1, len(self.body))
                 for i in range(len(self.body)):
                     for j in range(len(self.body[0])):
                         matrixMul.body[i][j] = other * self.body[i][j]
                 return matrixMul.body
             elif isinstance(other, Matrix):
                 tmp = []
-                matrixMul = Matrix(len(self.body), len(self.body[0]))
+                matrixMul = Matrix(1, len(self.body))
                 matrixMul.body = []
                 for i in range(len(self.body)):
                     for j in range(len(other.body[0])):

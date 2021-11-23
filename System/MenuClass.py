@@ -34,7 +34,7 @@ class Menu:
             if chose == 3:
                 cls.printMatrix()
             if chose == 4:
-                cls.calculateMatrix()
+                cls.calculateMatrixRows()
 
     @staticmethod
     def createMatrix():
@@ -52,9 +52,9 @@ class Menu:
         db.printMatrix()
 
     @staticmethod
-    def calculateMatrix():
+    def calculateMatrixRows():
         db = DataBase()
-
+        db.readMatrixRows()
 
 
 Menu()
