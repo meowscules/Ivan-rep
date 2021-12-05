@@ -2,8 +2,8 @@
 from Entity.MatrixClass import *
 
 if __name__ == '__main__':
-    M1 = Matrix(1, setMatrixRows())
-    M2 = Matrix(1, setMatrixRows())
+    M1 = Matrix(1, setMatrixRows(), )
+    M2 = Matrix(1, setMatrixRows(), )
     # test1
     M1.printMatrix()
     M2.printMatrix()

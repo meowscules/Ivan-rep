@@ -32,30 +32,36 @@ class Menu:
             if chose == 2:
                 cls.deleteMatrix()
             if chose == 3:
-                cls.printMatrix()
+                cls.printMatrices()
             if chose == 4:
                 cls.calculateMatrixRows()
 
     @staticmethod
     def createMatrix():
         db = DataBase()
-        db.createMatrix()
+        MatrixName = input("Matrix name: ")
+        RowNo = input("Enter rows quantity: ")
+        ColNo = input("Enter cols quantity: ")
+        CellValue = input("Enter values: ")
+        db.createMatrix(MatrixName, RowNo, ColNo, CellValue)
 
     @staticmethod
     def deleteMatrix():
         db = DataBase()
-        db.deleteMatrix()
+        matrixName = input("Print matrix name for deleting matrix: ")
+        db.deleteMatrix(matrixName)
 
     @staticmethod
-    def printMatrix():
+    def printMatrices():
         db = DataBase()
         db.printMatrix()
 
     @staticmethod
     def calculateMatrixRows():
         db = DataBase()
-        db.readMatrixRows()
-
-
+        matrixName = input("Select matrix: ")
+        M1 = Matrix(db.readMatrixRows(matrixName), db.readMatrixRows(matrixName), db.readMatrixValues(matrixName))
+        M1.printMatrix()
+        print(M1.body)
 Menu()
 

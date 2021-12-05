@@ -1,6 +1,9 @@
+import sqlite3
+
+
 class DataBaseError(Exception):
     pass
 
 
-class DataBaseRecordError(Exception):
+class DataError(Exception):
     pass
