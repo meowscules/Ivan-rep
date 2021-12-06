@@ -1,32 +1,26 @@
-
-from Entity.DataBaseException import *
+import sqlite3
 from collections import deque
+from sqlite3 import DataError
 
 
 class DataBase:
     global db
     global cur
-    try:
-        db = sqlite3.connect('matrix.db')
-        cur = db.cursor()
+    db = sqlite3.connect('matrix.db')
+    cur = db.cursor()
 
-        cur.execute("""CREATE TABLE IF NOT EXISTS matrices
-                                         (MatrixName varchar(24) NOT NULL,
-                                         RowNo smallint NOT NULL,
-                                         ColNo smallint NOT NULL,
-                                         CellValue varchar(50) NULL)
-                                         """)
-        db.commit()
-    except DataBaseError:
-        raise DataBaseError
+    cur.execute("""CREATE TABLE IF NOT EXISTS matrices
+                                     (MatrixName varchar(24) NOT NULL,
+                                     RowNo smallint NOT NULL,
+                                     ColNo smallint NOT NULL,
+                                     CellValue varchar(50) NULL)
+                                     """)
+    db.commit()
 
     @staticmethod
     def createMatrix(MatrixName, RowNo, ColNo, CellValue):
-        try:
-            cur.execute("INSERT INTO matrices VALUES (?, ?, ?, ?)", (MatrixName, RowNo, ColNo, CellValue))
-            db.commit()
-        except DataError:
-            raise DataError
+        cur.execute("INSERT INTO matrices VALUES (?, ?, ?, ?)", (MatrixName, RowNo, ColNo, CellValue))
+        db.commit()
 
     @staticmethod
     def deleteMatrix(matrixName):
@@ -57,10 +51,13 @@ class DataBase:
             for value in range(len(string)):
                 body.append(string[value])
         del body[1::2]
-        body = deque(body)
         for conversion in range(len(body)):
-            body.append(int(body[0]))
-            body.popleft()
+            body.append(int(body[conversion]))
+        rows = cur.execute(f'SELECT RowNo FROM matrices WHERE MatrixName = "{matrixName}"')
+        firstMultiplier = rows.fetchone()[0]
+        cols = cur.execute(f'SELECT ColNo FROM matrices WHERE MatrixName = "{matrixName}"')
+        secondMultiplier = cols.fetchone()[0]
+        del body[0:firstMultiplier*secondMultiplier]
         return body
 
     @staticmethod
